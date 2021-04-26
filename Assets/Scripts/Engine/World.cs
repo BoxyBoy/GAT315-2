@@ -32,7 +32,6 @@ public class World : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(1.0f / Time.deltaTime);
         float dt = Time.deltaTime;
         fps = (1.0f / dt);
 
@@ -44,16 +43,13 @@ public class World : MonoBehaviour
 
         GravitationalForce.ApplyForce(bodies, gravitation.value);
 
-        bodies.ForEach(body => body.shape.color = Color.red);
-
         timeAccumulator += fixedDeltaTime;
-
         while (timeAccumulator > fixedDeltaTime) 
         { 
             bodies.ForEach(body => body.Step(fixedDeltaTime)); 
             bodies.ForEach(body => Integrator.ExplicitEuler(body, fixedDeltaTime));
-            bodies.ForEach(Body => Body.shape.color = Color.white);
 
+            bodies.ForEach(Body => Body.shape.color = Color.white);
             if(collision == true)
             {
                 Collision.CreateContacts(bodies, out List<Contact> contacts);
@@ -61,12 +57,8 @@ public class World : MonoBehaviour
                 ContactSolver.Resolve(contacts);
             }
 
-
             timeAccumulator = timeAccumulator - fixedDeltaTime;
         }
-
-        bodies.ForEach(body => body.Step(dt));
-        bodies.ForEach(body => Integrator.ExplicitEuler(body, dt));
 
         bodies.ForEach(body => body.force = Vector2.zero);
         bodies.ForEach(body => body.acceleration = Vector2.zero);

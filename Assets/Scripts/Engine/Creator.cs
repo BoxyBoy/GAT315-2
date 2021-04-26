@@ -18,6 +18,7 @@ public class Creator : Action
     public override void StartAction()
     {
         action = true;
+        oneTime = true;
     }
 
     public override void StopAction()
@@ -35,13 +36,14 @@ public class Creator : Action
             GameObject gameObject = Instantiate(original, position, Quaternion.identity);
             if (gameObject.TryGetComponent<Body>(out Body body))
             {
-                Vector2 force = Random.insideUnitSphere.normalized * speed.value;
-                body.AddForce(force, Body.eForceMode.Velocity);
                 body.damping = damping;
                 body.restitution = restitution;
                 body.type = (Body.eType)bodyType.value;
                 body.shape.size = size;
                 body.shape.density = density;
+
+                Vector2 force = Random.insideUnitSphere.normalized * speed.value;
+                body.AddForce(force, Body.eForceMode.Velocity);
                 World.Instance.bodies.Add(body);
             }
         }
