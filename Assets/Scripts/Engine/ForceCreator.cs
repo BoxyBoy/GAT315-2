@@ -14,18 +14,6 @@ public class ForceCreator : Action
 
     bool action { get; set; } = false;
     bool oneTime { get; set; } = false;
-
-    public override void StartAction()
-    {
-        action = true;
-        oneTime = true;
-    }
-
-    public override void StopAction()
-    {
-        action = false;
-    }
-
     void Update()
     { 
         if (action && (oneTime || Input.GetKey(KeyCode.LeftControl)))
@@ -44,4 +32,16 @@ public class ForceCreator : Action
             }
         }
     }
+
+    public override void StartAction()
+    {
+        action = true;
+        oneTime = true;
+    }
+
+    public override void StopAction()
+    {
+        action = false;
+    }
+
 }

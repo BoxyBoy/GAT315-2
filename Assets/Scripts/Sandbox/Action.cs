@@ -8,8 +8,8 @@ public abstract class Action : MonoBehaviour
     {
         Creator,
         Connector,
-        Selector,
-        Force
+        Force,
+        Selector
     }
 
     public bool active { get; set; } = false;

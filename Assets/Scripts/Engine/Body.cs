@@ -57,6 +57,7 @@ public class Body : MonoBehaviour
     public void Step(float dt)
     {
         if (type != eType.Dynamic) return;
+        
 
         acceleration = acceleration + World.Instance.Gravity + (force * inverseMass);
     }

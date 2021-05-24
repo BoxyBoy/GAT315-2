@@ -12,7 +12,7 @@ public class Creator : Action
     public FloatData restitution;
     public BodyEnumData bodyType;
 
-    public override eActionType actionType => eActionType.Connector;
+    public override eActionType actionType => eActionType.Creator;
 
     bool action { get; set; } = false;
     bool oneTime { get; set; } = false;
@@ -34,8 +34,8 @@ public class Creator : Action
         {
             oneTime = false;
             Vector2 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
             GameObject gameObject = Instantiate(original, position, Quaternion.identity);
+
             if (gameObject.TryGetComponent<Body>(out Body body))
             {
                 body.damping = damping;
