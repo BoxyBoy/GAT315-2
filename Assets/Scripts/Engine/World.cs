@@ -20,8 +20,8 @@ public class World : MonoBehaviour
     public AABB AABB { get => aabb; }
 
     AABB aabb;
-    BroadPhase broadPhase = new NullBroadPhase();
-    //BroadPhase[] broadPhases = { new NullBroadPhase(), new QuadTree(), new BVH() };
+    BroadPhase broadPhase = new BVH();
+    BroadPhase[] broadPhases = { new NullBroadPhase(), new QuadTree(), new BVH() };
 
     private Vector2 size;
     public Vector2 Gravity { get { return new Vector2(0, gravity.value); } }
@@ -53,7 +53,7 @@ public class World : MonoBehaviour
         fps = (1.0f / dt);
         fpsAverage = (fpsAverage * smoothing) + (fps * (1.0f - smoothing));
 
-        //broadPhase = broadPhases[broadphaseType.index];
+        broadPhase = broadPhases[broadphaseType.index];
 
         fpsText.value = "FPS: " + fpsAverage.ToString("F1");
 
@@ -86,6 +86,7 @@ public class World : MonoBehaviour
             timeAccumulator -= fixedDeltaTime;
         }
         collisionText.value = "Broad Phase: " + BroadPhase.potentialCollisionCount.ToString();
+        broadPhase.Draw();
         if (collisionDebug)
         {
             broadPhase.Draw();

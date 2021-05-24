@@ -30,19 +30,13 @@ public class BVHNode : MonoBehaviour
     {
         if(bodies.Count > 0)
         {
-            aabb.center = bodies[0].position; aabb.size = Vector3.zero; 
+            aabb.center = bodies[0].position;
+            aabb.size = Vector3.zero; 
             foreach (Body body in bodies)
             {
-                
+                this.aabb.Expand(body.shape.aabb);
             }
         }
-        /*if (< bodies list has more than 0 elements >)
-            {
-            aabb.center = bodies[0].position; aabb.size = Vector3.zero; foreach (Body body in bodies)
-            {
-              < expand this aabb by the body shape aabb>
-            }
-        }*/
     }
 
     public void Split() 
@@ -51,13 +45,19 @@ public class BVHNode : MonoBehaviour
         int half = length / 2;//< half the length>; 
         if (half >= 1) 
         { 
-            left = new BVHNode(bodies.GetRange(0, half)); right = new BVHNode(bodies.GetRange(half, half + (length % 2))); bodies.Clear(); 
+            left = new BVHNode(bodies.GetRange(0, half));
+            right = new BVHNode(bodies.GetRange(half, half + (length % 2)));
+            bodies.Clear(); 
         } 
     }
 
     public void Draw() 
     { 
         aabb.Draw(Color.white);
-        //< check if the left / right node is not null below, use ? operator>< draw left node>< draw right node>
+        //< check if the left / right node is not null below, use ? operator>
+        //< draw left node>
+        left?.Draw();
+        //< draw right node>
+        right?.Draw();
     }
 }
